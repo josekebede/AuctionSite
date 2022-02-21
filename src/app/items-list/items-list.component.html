@@ -1,0 +1,7 @@
+<span class="header">{{selectedCategory}}</span>
+
+<span class="innerHeader" *ngIf="!selectedItems.length">No Items available</span>
+
+<div class="container">
+  <app-item *ngFor="let item of selectedItems" [item]="item" [auctionEnd]="auctionItems[0].endDate"></app-item>
+</div>

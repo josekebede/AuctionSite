@@ -1,0 +1,44 @@
+.container {
+  width: 50%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.header {
+  font-size: 3em;
+  font-weight: lighter;
+  display: block;
+  margin: 1em 0;
+  width: 100%;
+  text-align: center;
+}
+.formDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:1em;
+  button {
+    // font-size: 1.2em;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #682622;
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:active {
+    box-shadow: 0 0 15px 10px #005F5E;
+    background-color: #4b1b18;
+  }
+
+  button:hover {
+    box-shadow: 0 0 15px 5px #005F5E;
+  }
+}
+::ng-deep{
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #682622;
+  }
+}

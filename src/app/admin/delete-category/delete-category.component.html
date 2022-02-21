@@ -1,0 +1,16 @@
+<div class="container">
+  <span class="header">Delete Category</span>
+  <form #form [formGroup]="catForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective, form)">
+    <div class="formDiv">
+      <mat-form-field appearance="outline">
+        <mat-label>Select Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="submit">
+        <button mat-raised-button type="submit">Delete Category</button>
+      </div>
+    </div>
+  </form>
+</div>

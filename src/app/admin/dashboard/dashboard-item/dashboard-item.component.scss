@@ -1,0 +1,55 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: lighter;
+}
+
+th{
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+tr:nth-child(even)  {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+img {
+  width: 100px;
+  vertical-align: middle;
+}
+mat-accordion {
+  box-shadow: 0 0 3px 1px black;
+  margin: 5px 0;
+}
+mat-expansion-panel {
+  margin: 5px 0 !important;
+  box-shadow: 0 0 3px 1px black;
+}
+
+.special {
+  margin-left: 1em;
+  color: #005F5E;
+}
+.deleteHolder{
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5%;
+  margin-bottom: 1em;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  td, th {
+    font-size: 1em;
+  }
+  img {
+    width: 50px;
+  }
+}

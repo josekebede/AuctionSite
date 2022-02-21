@@ -1,0 +1,62 @@
+<form [formGroup]="register" #form (ngSubmit)="submit(form)">
+  <div class="registerContainer">
+    <div class="instruction">
+      <span>Register</span>
+    </div>
+    <div class="subContainer">
+      <div class="fieldBox">
+        <label for="firstname">First Name</label>
+        <input type="text" id="firstname" formControlName="firstName">
+        <div class="error" [ngClass]="this.hasError('firstName') ? 'visible' : ''">
+          <span>First Name is Required</span>
+        </div>
+      </div>
+
+      <div class="fieldBox">
+        <label for="lastname">Last Name</label>
+        <input type="text" id="lastname" formControlName="lastName">
+        <div class="error" [ngClass]="this.hasError('lastName') ? 'visible' : ''">
+          <span>Last Name is Required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subContainer">
+      <div class="fieldBox">
+        <label for="email">Email</label>
+        <input type="text" id="email" formControlName="email">
+        <div class="error" [ngClass]="this.hasError('email') ? 'visible' : ''">
+          <span *ngIf="this.hasError('email', 'required')">Email is Required</span>
+          <span *ngIf="this.hasError('email', 'email', 'required')">Enter valid email</span>
+        </div>
+      </div>
+
+      <div class="fieldBox">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password">
+        <div class="error" [ngClass]="this.hasError('password') ? 'visible' : ''">
+          <span *ngIf="this.hasError('password', 'required')">Password is Required</span>
+          <span *ngIf="this.hasError('password', 'minlength')">Password must be 8 character or more.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subContainer">
+      <div class="fieldBox" id="company">
+        <label for="companyID">Company ID</label>
+        <input type="text" id="companyID" formControlName="companyID">
+
+        <div class="error" [ngClass]="this.hasError('companyID') ? 'visible' : ''">
+          <span>Company ID Required</span>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">
+      Register
+    </button>
+    <div class="bottom">
+      <a routerLink="/login">Sign In Instead</a>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,138 @@
+$blueGreen: #005F5E;
+$brown: #682622;
+
+.container{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 1px #682622;
+  border: 1px solid #005f5e73;
+  margin: 1em;
+  padding: 2em;
+}
+
+.center{
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  img{
+    width: 100%;
+  }
+}
+.titleContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  // display: block;
+  // width: 100%;
+  font-size: 2em;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.internal-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+.description{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 15px;
+  align-items: center;
+
+  .description-value{
+    color: $blueGreen;
+  }
+}
+
+.wishlist-button {
+  margin-top: 15px;
+  background-color: $brown;
+  color: #ffffff;
+  width: 75%;
+}
+
+.auction {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+  margin: 15px 3px;
+  // gap: 5betweenpx;
+  .auction-end{
+    color: #8d3530;
+  }
+  span {
+    text-align: center;
+  }
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  button {
+    margin-top: 10px;
+    color: white;
+    background-color: $blueGreen;
+  }
+}
+
+.image {
+  label {
+    display: block;
+    border: 2px dashed darkslategray;
+    text-align: center;
+    padding: 0.5em 0;
+    // font-size: 1.5em;
+    font-weight: lighter;
+    // margin: 1em;
+    span {
+      display: block;
+      margin-bottom: 1em;
+    }
+  }
+  input {
+    display: none;
+  }
+}
+.goodImage {
+  border-color: green !important;
+}
+
+.badImage {
+  border-color: red !important;
+}
+.submit{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  button {
+    background-color: #8d3530;
+    color: white;
+    font-size: 1.1em;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-weight: lighter;
+    border: none;
+    border-radius: 3px;
+  }
+}
+.deleteContainer{
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  .delete {
+    background-color: white;
+    color: red;
+  }
+}

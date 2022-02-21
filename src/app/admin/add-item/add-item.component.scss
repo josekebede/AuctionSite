@@ -1,0 +1,124 @@
+.container {
+  width: 50%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.header {
+  font-size: 3em;
+  font-weight: lighter;
+  display: block;
+  margin: 1em 0;
+  width: 100%;
+  text-align: center;
+}
+
+.subContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-form-field {
+  flex: 1;
+  margin: 0 1em;
+  padding: 0;
+}
+
+.image {
+  label {
+    display: block;
+    width: 100%;
+    border: 2px dashed darkslategray;
+    text-align: center;
+    padding: 2em;
+    font-size: 1.5em;
+    font-weight: lighter;
+    margin: 1em;
+    span {
+      display: block;
+      margin-bottom: 1em;
+    }
+  }
+  input {
+    display: none;
+  }
+}
+
+.goodImage {
+  border-color: green !important;
+}
+
+.badImage {
+  border-color: red !important;
+}
+.submit {
+  justify-content: center;
+}
+
+::ng-deep{
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #682622;
+  }
+}
+.submit{
+
+  button {
+    padding: 0.5em 1.5em;
+    font-size: 1.2em;
+    margin: 1em;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #682622;
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:active {
+    box-shadow: 0 0 15px 10px #005F5E;
+    background-color: #4b1b18;
+  }
+
+  button:hover {
+    box-shadow: 0 0 15px 5px #005F5E;
+  }
+}
+
+.toggleContainer{
+  margin-top: 3px;
+  margin-left: 1em;
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  // align-items: flex-start;
+  button{
+    border: 1px solid #4b1b18;
+  }
+
+  .active{
+    color: white;
+    background-color: #682622;
+  }
+}
+.noAuction{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+  font-weight: lighter;
+}
+
+#brownButton {
+  padding: 0 1em;
+  font-size: 1em;
+  margin: 0 1em 1em 1em;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #005F5E;
+  transition: all 0.2s ease-in-out;
+}
+.flex-end{
+  justify-content: flex-end;
+}

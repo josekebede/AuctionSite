@@ -1,0 +1,7 @@
+<span class="header">Special Items</span>
+
+<span class="innerHeader" *ngIf="!specialItems || !specialItems.length">No Special Items available</span>
+<div class="container">
+  <app-item *ngFor="let specialItem of specialItems; let i = index" [item]="items[i]"
+    [auctionEnd]="specialItem.auctionEnd" [inWishlist]="true" [isSpecial]="true"></app-item>
+</div>

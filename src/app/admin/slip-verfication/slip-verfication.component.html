@@ -1,0 +1,41 @@
+<span class="header">Bank Slip Verification</span>
+<span class="subHeader" *ngIf="!slips.length">No Slips</span>
+
+<div class="container">
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let slip of slips" class="expansionPanel">
+      <mat-expansion-panel-header>
+        <div class="expansionHeader">
+          By: {{slip.userFullName}}
+          <span *ngIf="slip.special" class="special">Special</span>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="slip">
+        <div class="content">
+          <span>Item Title</span>
+          <span>{{slip.itemTitle}}</span>
+
+          <span>Item Code</span>
+          <span>{{slip.itemCode}}</span>
+
+          <span>Initial Bid</span>
+          <span>{{slip.initialBid}}</span>
+
+          <span>Current Bid</span>
+          <span>{{slip.currentBid}}</span>
+        </div>
+        <div class="rightRegion">
+          <img [src]="slip.slipResource">
+          <div class="buttons">
+            <button mat-raised-button class="reject" (click)="slipReject(slip.bidID, slip.userFullName)">Reject</button>
+            <button mat-raised-button class="verify" (click)="slipVerify(slip.bidID, slip.userFullName)">Verify</button>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <!-- <img [src]="slip.slipResource"> -->
+  <!-- </div> -->
+
+</div>

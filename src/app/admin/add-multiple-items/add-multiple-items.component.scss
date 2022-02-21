@@ -1,0 +1,55 @@
+.container {
+  width: 50%;
+    margin: auto;
+    margin-top: 5%;
+}
+.headerRegion{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  button {
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+.header {
+  font-size: 3em;
+  font-weight: lighter;
+  display: inline-block;
+  margin: 1em 0;
+  width: auto;
+  text-align: center;
+}
+
+.uploadRegion {
+  label {
+    display: flex;
+    justify-content: center;
+    // width: 100%;
+    border: 2px dashed black;
+    padding: 1em;
+    margin: auto;
+    font-weight: lighter;
+    font-size: 1.5em;
+  }
+  input{
+    display: none;
+  }
+}
+.submitRegion{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  button {
+    margin: 15px 0;
+    color: white;
+    background-color: #682622;
+  }
+}
+.goodImage {
+  border-color: green !important;
+}
+
+.badImage {
+  border-color: red !important;
+}

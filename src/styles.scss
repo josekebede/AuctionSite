@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; background-color: #F5F5F5;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+input{
+  box-shadow: 0 0 0px 1000px #fafafa inset;;
+  -webkit-box-shadow: 0 0 0px 1000px #fafafa inset;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}

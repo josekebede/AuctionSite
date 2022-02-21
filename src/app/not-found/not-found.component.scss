@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+  width: 90%;
+  span {
+    font-size: 5em;
+    font-weight: lighter;
+  }
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    span{
+      font-size: 3em;
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .container {
+    span{
+      font-size: 2em;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    span{
+      font-size: 1.5em;
+    }
+  }
+}

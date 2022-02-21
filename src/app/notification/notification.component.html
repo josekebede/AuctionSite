@@ -1,0 +1,9 @@
+<span class="header">Notifications</span>
+<span class="innerHeader" *ngIf="!notifications.length">No Notifications</span>
+<div class="container">
+  <div class="notification" *ngFor="let notification of notifications"
+    [ngClass]="notification.type == 'REJECT'? 'bad' : 'good'">
+    <span class="date">{{formatDate(notification.date)}}</span>
+    <span>{{notification.message}}</span>
+  </div>
+</div>

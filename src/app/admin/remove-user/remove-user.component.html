@@ -1,0 +1,17 @@
+<div class="container">
+  <span class="header">Delete User</span>
+  <form [formGroup]="delForm" #formDirective="ngForm" #form (ngSubmit)="onSubmit(formDirective, form)">
+    <div class="formDiv">
+      <mat-form-field appearance="outline">
+        <mat-label>Choose User</mat-label>
+        <mat-select formControlName="userID">
+          <mat-option *ngFor="let user of userList" [value]="user._id">{{getFullValue(user)}}</mat-option>
+        </mat-select>
+        <mat-error>User is required</mat-error>
+      </mat-form-field>
+      <div class="submit">
+        <button mat-raised-button type="submit">Delete User</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="deleteContainer" *ngIf="!isSpecial && (isBid || inWishlist)">
+    <button type="button" class="delete" mat-icon-button (click)="deleteItem()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <div class="titleContainer">
+    <span class="title">{{item.title}}</span>
+  </div>
+  <div class="center">
+    <img [src]="imageURL" />
+    <div class="internal-container">
+
+      <div class="description">
+        <span class="description-header">Type</span>
+        <span class="description-value">{{item.type}}</span>
+        <span class="description-header">Code</span>
+        <span class="description-value">{{item.code}}</span>
+        <span class="description-header" *ngIf="!isBid">Initial Bid</span>
+        <span class="description-header" *ngIf="isBid">Amount Bid</span>
+        <span class="description-value">{{item.initialBid}}</span>
+      </div>
+      <button class="wishlist-button" mat-raised-button *ngIf="!isBid && !inWishlist" (click)="wishlistClick()"
+        [disabled]="wishlistDisabled">
+        Add to Wishlist</button>
+    </div>
+
+  </div>
+  <div class="auction">
+    <span>Auction Ends In:</span>
+    <span class="auction-end">{{timeLeft}}</span>
+  </div>
+
+  <form [formGroup]="bidGroup" #form #formDirective="ngForm" *ngIf="!isBid">
+    <div class="bottom">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Bid</mat-label>
+        <input [min]="item.initialBid" type="number" matInput formControlName="bid">
+        <mat-error *ngIf="hasError('bid', 'required', 'min')">Bid is required</mat-error>
+        <mat-error *ngIf="hasError('bid', 'min')">Minimum allowed amount is {{item.initialBid}}</mat-error>
+      </mat-form-field>
+      <button type="submit" mat-raised-button (click)="bidSubmit(form, formDirective)">Bid</button>
+    </div>
+  </form>
+
+  <form [formGroup]="proofGroup" *ngIf="isBid">
+    <div class="image">
+      <label for="proof" [ngClass]="imageDirty ? imageUploaded ? 'goodImage' : 'badImage' : ''"
+        (click)="imageClicked()">
+        <span *ngIf="!imageDirty">Add Bankslip Image</span>
+        <span *ngIf="imageDirty && !imageUploaded">Bankslip Image Required</span>
+        <span *ngIf="imageDirty && imageUploaded">Bankslip Image Uploaded</span>
+        <mat-icon>add_a_photo</mat-icon>
+      </label>
+      <input id="proof" type="file" (change)="imageChanged($event)" accept="image/png, image/jpeg">
+    </div>
+    <div class="submit">
+      <button type="button" (click)="uploadClicked()">Upload</button>
+    </div>
+  </form>
+</div>

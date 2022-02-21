@@ -1,0 +1,137 @@
+$background: #005F5E;
+
+.registerContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: auto;
+  margin-top: 5%;
+  min-width: 300px;
+  background-color: $background;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 5px #682622;
+  border: 1px solid rgb(0, 80, 78);
+}
+.subContainer {
+  display: flex;
+  width: 90%;
+  // padding: 0 5%;
+  // justify-content: space-evenly;
+}
+
+
+.instruction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2em;
+  text-decoration: underline;
+  // color: white;
+  span {
+    margin: 1.5em 0 0.5em 0;
+  }
+}
+.fieldBox {
+  margin: 1em 0;
+  display: flex;
+  width: 75%;
+  flex-direction: column;
+  align-items: center;
+  label {
+    font-size: 1.2em;
+    margin: 5px 2px;
+  }
+  input {
+    font-size: 1.2em;
+    padding: 9px;
+    margin: 5px 2px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    width: auto;
+  }
+  input:focus {
+    border: 2px solid #682622;
+    // // padding: 2px;
+    margin: 3px 0;
+  }
+}
+#company {
+  flex: 0.5
+}
+button {
+  padding: 0.5em 1.5em;
+  font-size: 1.2em;
+  margin: 1em;
+  border: none;
+  border-radius: 5px;
+  // color: white;
+  background-color: #EFCA58;
+  transition: all 0.1s ease-in-out;
+}
+
+button:active {
+  background-color: #dab751;
+  box-shadow: 0 0 5px 3px #EFCA58;
+  font-size: 1.25em;
+  margin: 0.9em
+}
+
+.error {
+  opacity: 0;
+  color:rgb(253, 158, 158);
+  transition: all 0.2s ease-in-out;
+}
+.visible {
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+}
+
+.placeholder {
+  color: transparent;
+}
+.bottom {
+  // width: auto;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10%;
+  width: 100%;
+    a{
+    display: block;
+    margin: 1em;
+    width: auto;
+    text-decoration: none;
+    color: #EFCA58;
+    font-size: 1.2em;
+  }
+
+}
+@media only screen and (max-width: 1000px) {
+  .subContainer {
+    flex-direction: column;
+  }
+
+  .fieldBox{
+    width: 100%;
+    align-items: center;
+    margin-bottom: 0;;
+    input {
+      width: 95%;
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .registerContainer {
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .registerContainer {
+    width: 80%;
+  }
+}
+

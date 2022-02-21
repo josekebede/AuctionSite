@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="headerRegion">
+    <button mat-icon-button color="accent" routerLink="../">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <span class="header">Upload File</span>
+  </div>
+
+  <form [formGroup]="uploadForm" #form #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective, form)">
+    <div class="uploadRegion">
+      <label for="fileInput" [ngClass]="imageDirty ? imageUploaded ? 'goodImage' : 'badImage' : ''"
+        (click)="imageClicked()">
+        <span *ngIf="!imageDirty">Click and Choose File to Upload</span>
+        <span *ngIf="imageDirty && !imageUploaded">File is Required</span>
+        <span *ngIf="imageDirty && imageUploaded">File Chosen. Now Click Upload</span>
+      </label>
+      <input type="file" id="fileInput" (change)="imageChanged($event)" accept=".xlsx, .xls, .csv">
+    </div>
+    <div class="submitRegion">
+      <button type="submit" mat-raised-button>Upload</button>
+    </div>
+  </form>
+</div>

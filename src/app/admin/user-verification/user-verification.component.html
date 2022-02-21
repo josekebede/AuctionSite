@@ -1,0 +1,19 @@
+<span class="header">User Verification</span>
+
+<span class="subHeader" *ngIf="!users.length">No unverified users</span>
+<div class="container">
+  <div class="user" *ngFor="let user of users">
+    <div class="information">
+      <span class="instruction">Name</span>
+      <span class="fullName">{{user.firstName}} {{user.lastName}}</span>
+      <span class="instruction">Email</span>
+      <span class="email">{{user.email}}</span>
+      <span class="instruction">Company ID</span>
+      <span class="companyID">{{user.companyID}}</span>
+    </div>
+    <div class="buttonContainer">
+      <button mat-raised-button (click)="verifyUser(user._id, user.firstName + ' ' + user.lastName)">Verify</button>
+    </div>
+  </div>
+
+</div>

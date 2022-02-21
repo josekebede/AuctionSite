@@ -1,0 +1,15 @@
+<div class="container">
+  <span class="header">Add Category</span>
+  <form #form [formGroup]="categoryForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective, form)">
+    <div class="formDiv">
+      <mat-form-field appearance="outline">
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="category">
+        <mat-error>Category is Required</mat-error>
+      </mat-form-field>
+      <div class="submit">
+        <button mat-raised-button type="submit">Add Category</button>
+      </div>
+    </div>
+  </form>
+</div>

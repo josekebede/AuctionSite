@@ -1,0 +1,81 @@
+<div class="container">
+  <span class="header">Add Item</span>
+  <div class="formDiv">
+    <form #form [formGroup]="itemForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective, form)">
+      <div class="subContainer flex-end">
+        <button id="brownButton" mat-raised-button routerLink="./upload">Upload File</button>
+      </div>
+      <div class="subContainer">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput type="text" formControlName="title">
+          <mat-error>Title is required</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="subContainer">
+        <mat-form-field appearance="outline">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+          </mat-select>
+          <mat-error>Type is required</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Initial Bid</mat-label>
+          <input matInput type="number" formControlName="initialBid">
+          <mat-error>Initial Bid is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="subContainer">
+        <div class="toggleContainer">
+          <button mat-button [ngClass]="newAuction ? 'active' : '' " type="button" (click)="newClicked()">New</button>
+          <button mat-button [ngClass]="!newAuction ? 'active' : '' " type="button"
+            (click)="existingClicked()">Existing</button>
+        </div>
+
+        <div class="noAuction" *ngIf="!newAuction && auctions.length == 0">
+          <span>No Auctions Available</span>
+        </div>
+
+        <mat-form-field appearance="outline" *ngIf="!newAuction && auctions.length > 0">
+          <mat-label>Auctions</mat-label>
+          <mat-select formControlName="auctionSelect">
+            <mat-option *ngFor="let auction of auctions" [value]="auction._id">
+              {{formatAuctionDates(auction)}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="newAuction">
+          <mat-label>Enter Auction Range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="auctionStart" placeholder="Auction Start">
+            <input matEndDate formControlName="auctionEnd" placeholder="Auction End">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="subContainer image">
+        <label for="picture" [ngClass]="imageDirty ? imageUploaded ? 'goodImage' : 'badImage' : ''"
+          (click)="imageClicked()">
+          <span *ngIf="!imageDirty">Add Image</span>
+          <span *ngIf="imageDirty && !imageUploaded">Image Required</span>
+          <span *ngIf="imageDirty && imageUploaded">Image Uploaded</span>
+          <mat-icon>add_a_photo</mat-icon>
+        </label>
+        <input type="file" id="picture" (change)="imageChanged($event)">
+      </div>
+
+      <div class="subContainer submit">
+        <button type="submit">GO</button> <!--Create Auction mehon alebet-->
+      </div>
+    </form>
+  </div>
+</div>

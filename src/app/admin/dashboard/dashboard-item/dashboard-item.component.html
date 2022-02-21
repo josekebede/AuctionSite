@@ -1,0 +1,37 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let auction of auctions">
+    <mat-expansion-panel-header>
+      {{formatAuctionTitle(auction)}}
+      <span *ngIf="auction.special" class="special">Special</span>
+    </mat-expansion-panel-header>
+    <div class="deleteHolder" *ngIf="!isPast">
+      <button mat-raised-button color="accent" (click)="clickDeleteAuction(auction.id)">Delete Auction</button>
+    </div>
+    <table *ngIf="auction.items.length">
+      <tr class="headers">
+        <th>Item Code</th>
+        <!-- <th>Item Name</th> -->
+        <th>Type</th>
+        <th>Initial Bid</th>
+        <th *ngIf="isPast">Winning Bid</th>
+        <th *ngIf="isPast">Winner</th>
+        <th>Picture</th>
+        <!-- <th *ngIf="hasButtons">Edit</th> -->
+      </tr>
+      <tr *ngFor="let item of auction.items; let i = index">
+        <td>{{item.code}}</td>
+        <!-- <td>{{item.title}}</td> -->
+        <td>{{item.type}}</td>
+        <td>{{item.initialBid}}</td>
+        <td *ngIf="isPast">{{item.highestBid? item.highestBid : 'N/A'}}</td>
+        <td *ngIf="isPast">{{item.fullName? item.fullName : 'N/A'}}</td>
+        <td><img [src]="auction.images[i]"></td>
+        <td *ngIf="hasButtons">
+          <button mat-icon-button color="accent" (click)="clickItemDelete(item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

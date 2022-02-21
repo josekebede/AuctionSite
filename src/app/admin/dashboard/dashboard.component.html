@@ -1,0 +1,23 @@
+<span class="header">Dashboard</span>
+
+<mat-tab-group dynamicHeight mat-align-tabs="center">
+  <mat-tab label="Past">
+    <span class="subHeader" *ngIf="!pastAuctions.length">No Auctions Here</span>
+    <app-dashboard-item *ngIf="pastAuctions.length" [auctions]="pastAuctions" [isPast]="true"></app-dashboard-item>
+  </mat-tab>
+
+
+  <mat-tab label="Present">
+    <span class="subHeader" *ngIf="!currentAuctions.length">No Auctions Here</span>
+    <app-dashboard-item *ngIf="currentAuctions.length" [auctions]="currentAuctions" [isPast]="false">
+    </app-dashboard-item>
+  </mat-tab>
+
+
+  <mat-tab label="Future">
+    <span class="subHeader" *ngIf="!futureAucitons.length">No Auctions Here</span>
+    <app-dashboard-item *ngIf="futureAucitons.length" [auctions]="futureAucitons" [hasButtons]="true" [isPast]="false">
+    </app-dashboard-item>
+
+  </mat-tab>
+</mat-tab-group>

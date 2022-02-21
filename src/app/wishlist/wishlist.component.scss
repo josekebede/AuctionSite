@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+}
+.header, .innerHeader{
+  font-size: 3em;
+  font-weight: lighter;
+  display: block;
+  margin: 1em 0;
+  width: 100%;
+  text-align: center;
+}
+
+.innerHeader{
+  font-size: 2em;
+  color:  rgb(0, 80, 78);
+}

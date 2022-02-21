@@ -1,0 +1,7 @@
+<span class="header">Wishlist</span>
+
+<span class="innerHeader" *ngIf="!wishlist || !wishlist.items.length">No Items available</span>
+<div class="container" *ngIf="wishlist && wishlist.items">
+  <app-item *ngFor="let item of wishlist.items" [item]="item" [auctionEnd]="wishlist.endDate" [inWishlist]="true">
+  </app-item>
+</div>

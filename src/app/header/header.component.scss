@@ -1,0 +1,55 @@
+$paddingValue : 16px;
+a {
+  height: 90%;
+}
+
+img {
+  height: 100%;
+}
+
+mat-toolbar {
+  padding-top: $paddingValue;
+  padding-bottom: $paddingValue;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.nameRegion{
+  display: flex;
+  a {
+    height: 100%;
+  }
+  button{
+    margin-left: 1em;
+    height: 100%;
+    background-color:  rgba(0, 0, 0, 0.1);
+  }
+}
+
+.menu {
+  margin-right: 5px;
+  margin-left: -5px;
+}
+.spacer{
+  flex: 1 1 auto;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.menuIcon{
+  display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .menuIcon{
+    display: inline-block;
+    background-color: transparent !important;
+  }
+
+  .buttonList{
+    display: none;
+  }
+}

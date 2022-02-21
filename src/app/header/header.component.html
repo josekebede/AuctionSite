@@ -1,0 +1,51 @@
+<mat-toolbar>
+  <button class="menu" (click)="toggleSidenav()" mat-icon-button *ngIf="checkRoute(['auctionItems', 'admin'])">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a routerLink="/home" class="logo">
+    <img src="../../assets/ILRI-CGIAR-LOGO-Compressed.png" alt="">
+  </a>
+  <div class="spacer"></div>
+  <div class="nameRegion" *ngIf="!checkRoute(['login','registration'])">
+    <div class="buttonList">
+
+      <a mat-button (click)="routeClick()" routerLink="/auctionItems" routerLinkActive="active"
+        *ngIf="isUser()">Items</a>
+      <a mat-button (click)="routeClick()" routerLink="/bids" routerLinkActive="active" *ngIf="isUser()">Bids</a>
+      <a mat-button (click)="routeClick()" routerLink="/notification" routerLinkActive="active" *ngIf="isUser()"
+        [matBadge]="getNotifCounter()" matBadgePosition="before">Notification</a>
+      <a mat-button (click)="routeClick()" routerLink="/wishlist" routerLinkActive="active"
+        *ngIf="isUser()">Wishlist</a>
+      <a mat-button (click)="routeClick()" routerLink="/specialItems" routerLinkActive="active" *ngIf="isUser()">Special
+        Items</a>
+      <a mat-button (click)="routeClick()" routerLink="/admin/dashboard" routerLinkActive="active"
+        *ngIf="isAdmin()">Dashboard</a>
+
+    </div>
+    <button mat-icon-button class="menuIcon" *ngIf="isAdmin() || isUser()">
+      <mat-icon [matMenuTriggerFor]="btnList">menu</mat-icon>
+    </button>
+
+
+    <mat-menu #btnList="matMenu">
+      <a mat-menu-item (click)="routeClick()" routerLink="/auctionItems" routerLinkActive="active"
+        *ngIf="isUser()">Items</a>
+      <a mat-menu-item (click)="routeClick()" routerLink="/bids" routerLinkActive="active" *ngIf="isUser()">Bids</a>
+      <a mat-menu-item (click)="routeClick()" routerLink="/notification" routerLinkActive="active" *ngIf="isUser()"
+        [matBadge]="getNotifCounter()" matBadgePosition="before">Notification</a>
+      <a mat-menu-item (click)="routeClick()" routerLink="/wishlist" routerLinkActive="active"
+        *ngIf="isUser()">Wishlist</a>
+      <a mat-menu-item (click)="routeClick()" routerLink="/specialItems" routerLinkActive="active"
+        *ngIf="isUser()">Special
+        Items</a>
+
+      <a mat-menu-item (click)="routeClick()" routerLink="/admin/dashboard" routerLinkActive="active"
+        *ngIf="isAdmin()">Dashboard</a>
+    </mat-menu>
+    <a mat-button *ngIf="!isAdmin() && !isUser()" routerLink="/login">Login</a>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin() || isUser()">{{fullName}}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logOut()">Log Out</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
