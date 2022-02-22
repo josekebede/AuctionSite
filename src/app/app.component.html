@@ -12,60 +12,6 @@
       <a mat-button routerLinkActive="active" routerLink="/stock">Stock Items</a> -->
     </div>
 
-    <div class="column" *ngIf="checkIfAdmin()">
-      <span>Navigate</span>
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            User
-          </mat-expansion-panel-header>
-          <div class="buttons">
-            <a mat-button (click)="routeClick()" routerLink="/admin/verifyUser" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">Verify User</a>
-            <a mat-button (click)="routeClick()" routerLink="/admin/deleteUser" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">
-              Delete User
-            </a>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            Slip
-          </mat-expansion-panel-header>
-          <div class="buttons">
-
-            <a mat-button (click)="routeClick()" routerLink="/admin/verifySlip" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">Verify Slip</a>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            Category
-          </mat-expansion-panel-header>
-          <div class="buttons">
-            <a mat-button (click)="routeClick()" routerLink="/admin/addCategory" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">
-              Add Category
-            </a>
-            <a mat-button (click)="routeClick()" routerLink="/admin/deleteCatgory" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">
-              Delete Category
-            </a>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            Auction
-          </mat-expansion-panel-header>
-          <div class="buttons">
-            <a mat-button (click)="routeClick()" routerLink="/admin/addItem" routerLinkActive="active"
-              *ngIf="checkIfAdmin()">
-              Add Item
-            </a>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>

@@ -53,3 +53,8 @@
 .badImage {
   border-color: red !important;
 }
+@media only screen and (max-width: 1000px) {
+  .container{
+    width: 85%;
+  }
+}

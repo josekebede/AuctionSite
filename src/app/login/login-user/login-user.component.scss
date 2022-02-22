@@ -51,19 +51,31 @@ $background: #005F5E;
     margin: 5px 2px;
   }
   input {
-    font-size: 1.2em;
-    padding: 9px;
-    margin: 5px 2px;
-    outline: none;
-    border: none;
-    border-radius: 3px;
-    width: auto;
+    color: white;
+    background-color: $background;
+    box-shadow: 0 0 0px 1000px $background inset;;
+    -webkit-box-shadow: 0 0 0px 1000px $background inset;;
   }
-  input:focus {
-    border: 2px solid #682622;
-    // // padding: 2px;
-    margin: 3px 0;
-  }
+  input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+  // mat-form-field {
+  //   font-size: 1.2em;
+  //   padding: 9px;
+  //   margin: 5px 2px;
+  //   outline: none;
+  //   border: none;
+  //   border-radius: 3px;
+  //   width: auto;
+  // }
+  // input:focus {
+  //   border: 2px solid #682622;
+  //   // // padding: 2px;
+  //   margin: 3px 0;
+  // }
 }
 
 button {
@@ -73,7 +85,7 @@ button {
   border: none;
   border-radius: 5px;
   // color: white;
-  background-color: #682525;
+  background-color: #EFCA58;
   transition: all 0.2s ease-in-out;
 }
 
@@ -98,6 +110,23 @@ button:active {
 
 }
 
+.white{
+  color: white;
+}
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+ }
+
+ ::ng-deep.mat-form-field-outline {
+  /*change color of underline*/
+  border-color: white;
+}
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: green !important;;
+}
 @media only screen and (max-width: 1000px) {
   .login {
     width: 50%;

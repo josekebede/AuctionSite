@@ -41,6 +41,10 @@ export class DeleteCategoryComponent implements OnInit {
   }
   onSubmit(formDirective: FormGroupDirective, form: HTMLFormElement) {
     if (this.catForm.valid) {
+      if (!this.categories.length) {
+        this.service.popup("No Categories to Delete", true);
+        return;
+      }
       let category = this.catForm.get('category')!.value;
       if (window.confirm(`Are you sure you want to delete ${category}?`)) {
         this.service.deleteCategory(category)

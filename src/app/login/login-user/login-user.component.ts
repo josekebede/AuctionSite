@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login-user.component.scss']
 })
 export class LoginUserComponent implements OnInit, OnDestroy {
-
+  hide = true;
   incorrectLogin = false;
   loginSub: Subscription;
   login = new FormGroup({

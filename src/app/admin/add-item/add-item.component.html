@@ -2,7 +2,7 @@
   <span class="header">Add Item</span>
   <div class="formDiv">
     <form #form [formGroup]="itemForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective, form)">
-      <div class="subContainer flex-end">
+      <div class="subContainer flex-end upload">
         <button id="brownButton" mat-raised-button routerLink="./upload">Upload File</button>
       </div>
       <div class="subContainer">
@@ -74,7 +74,7 @@
       </div>
 
       <div class="subContainer submit">
-        <button type="submit">GO</button> <!--Create Auction mehon alebet-->
+        <button type="submit">GO</button>
       </div>
     </form>
   </div>

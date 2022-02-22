@@ -5,13 +5,19 @@
       <span [ngClass]="incorrectLogin ? 'incorrect' : 'correct' ">Incorrect Username or Password</span>
     </div>
     <div class="fieldBox usernameRegion">
-      <label for="username">Email</label>
-      <input type="text" id="username" formControlName="email">
+      <mat-form-field appearance="outline">
+        <mat-label class="white">Email</mat-label>
+        <input matInput type="text" id="username" formControlName="email">
+      </mat-form-field>
     </div>
 
     <div class="fieldBox passwordRegion">
-      <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password">
+      <!-- <label for="password">Password</label> -->
+      <mat-form-field appearance="outline">
+        <mat-label class="white">Password</mat-label>
+        <input matInput [type]="hide? 'password' : 'text'" id="password" formControlName="password">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
     </div>
 
     <button type="submit">
@@ -20,6 +26,7 @@
 
     <div class="bottom">
       <a routerLink="/registration">Register</a>
+      <a routerLink="">Forgot Password?</a>
 
     </div>
   </div>
