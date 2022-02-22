@@ -38,6 +38,7 @@ export class ServiceService {
   private deletedItemAdmin = new Subject<string>();
   private unverifiedUsers = new Subject<User[]>();
   private userVerified = new Subject<string>();
+  private userRejected = new Subject<string>();
   private proofSent = new Subject<string>();
   private slips = new Subject<Slip[]>();
   private slipVerified = new Subject<{ slipID: string, status: boolean }>();
@@ -88,6 +89,9 @@ export class ServiceService {
   }
   getVerifiedUser() {
     return this.userVerified.asObservable();
+  }
+  getRejectedUser() {
+    return this.userRejected.asObservable();
   }
   getUnverifiedUsers() {
     return this.unverifiedUsers.asObservable();
@@ -240,8 +244,12 @@ export class ServiceService {
       },
       // If there is an error message, it shows an error
       (error: HttpErrorResponse) => {
-        if (error.status == 403)
-          this.popup("Not Verified. Please Contact Admin")
+        if (error.status == 403) {
+          if (error.error.errorCode == 1)
+            this.popup("Not Verified. Please Contact Admin")
+          else
+            this.popup("Verification Not Approved. Please Register Again")
+        }
         else
           this.loginCorrectUser.next(false)
       }
@@ -255,9 +263,12 @@ export class ServiceService {
   // This registers the user
   register(formData: object) {
     // Sends a registration request to the backend
-    this.httpClient.post<{ registerd: boolean }>(this.backendURL + "auth/register", formData).subscribe(
+    this.httpClient.post<{ type: string }>(this.backendURL + "auth/register", formData).subscribe(
       data => {
-        this.popup("Registration Complete")
+        if (data.type == "REGISTER")
+          this.popup("Registration Complete")
+        else
+          this.popup("Registration Updated")
         // Client Successfully registers and redirects to login
         this.router.navigate(['/login']);
       },
@@ -581,6 +592,21 @@ export class ServiceService {
       )
     } else {
       this.router.navigate(['/login'])
+    }
+  }
+
+  rejectUser(userID: string) {
+    let authHeader = this.createTokenHeader();
+    if (authHeader) {
+      this.httpClient.post<string>(this.backendURL + "verify/userReject", { userID: userID }, { headers: authHeader }).subscribe(
+        data => {
+          this.userRejected.next(data)
+        }, error => {
+          console.log(error)
+        }
+      )
+    } else {
+      this.router.navigate(["/login"])
     }
   }
 

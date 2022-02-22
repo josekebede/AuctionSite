@@ -17,8 +17,10 @@ router.post("/login", async (req, res) => {
   // if (type == "user") {
   const userResult = await User.findOne({ email: { $eq: email } });
   if (userResult) {
-    if (!userResult.verified)
-      return res.status(403).json({ message: "Not Verified" })
+    if (userResult.verified == false)
+      return res.status(403).json({ message: "Not Verified", errorCode: 1 })
+    else if (userResult.verified == null)
+      return res.status(403).json({ message: "Verification Cancelled", errorCode: 2 })
     let isFound = await bcrypt.compare(password, userResult.password);
     if (isFound) {
       const fullName = userResult.firstName + " " + userResult.lastName;
@@ -50,6 +52,18 @@ router.post("/register", async (req, res) => {
 
 
   const userResult = await User.findOne({ email: { $eq: email } });
+  if (userResult && userResult.verified == null) {
+    const hashedPassword = await bcrypt.hash(password, 10)
+    userResult.firstName = firstName
+    userResult.lastName = lastName
+    userResult.email = email
+    userResult.password = hashedPassword
+    userResult.companyID = companyID
+    userResult.verified = false;
+
+    await userResult.save();
+    return res.status(201).send({ type: "UPDATE" })
+  }
   if (userResult)
     return res.status(403).json({ message: "USER EXISTS" });
 
@@ -65,7 +79,7 @@ router.post("/register", async (req, res) => {
 
   const newUser = await user.save();
   if (newUser)
-    return res.status(201).send({ registered: true }) // Sending success
+    return res.status(201).send({ type: "REGISTER" }) // Sending success
   return res.status(400).send({ message: "Error Saving User" }) // Sending Error
 })
 

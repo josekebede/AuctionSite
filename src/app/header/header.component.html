@@ -20,7 +20,7 @@
       <a mat-button (click)="routeClick()" routerLink="/specialItems" routerLinkActive="active" *ngIf="isUser()">Special
         Items</a>
 
-      <button mat-button *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="userList" class="expandable">
+      <button mat-button *ngIf="isAdmin()" [matMenuTriggerFor]="userList" class="expandable">
         User
       </button>
       <mat-menu #userList="matMenu">
@@ -29,14 +29,14 @@
       </mat-menu>
 
 
-      <button mat-button *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="slipList" class="expandable">
+      <button mat-button *ngIf="isAdmin()" [matMenuTriggerFor]="slipList" class="expandable">
         Slip
       </button>
       <mat-menu #slipList="matMenu">
         <a mat-menu-item (click)="routeClick()" routerLink="/admin/verifySlip" *ngIf="isAdmin()">Verify Slip</a>
       </mat-menu>
 
-      <button mat-button *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="categoryList" class="expandable">
+      <button mat-button *ngIf="isAdmin()" [matMenuTriggerFor]="categoryList" class="expandable">
         Category
       </button>
       <mat-menu #categoryList="matMenu">
@@ -44,7 +44,7 @@
         <a mat-menu-item (click)="routeClick()" routerLink="/admin/deleteCatgory" *ngIf="isAdmin()">Delete Category</a>
       </mat-menu>
 
-      <button mat-button *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="auctionList" class="expandable">
+      <button mat-button *ngIf="isAdmin()" [matMenuTriggerFor]="auctionList" class="expandable">
         Auction
       </button>
       <mat-menu #auctionList="matMenu">
@@ -73,7 +73,7 @@
 
       <a mat-menu-item (click)="routeClick()" routerLink="/admin/dashboard" routerLinkActive="active"
         *ngIf="isAdmin()">Dashboard</a>
-      <button mat-menu-item *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="userList" class="expandable">
+      <button mat-menu-item *ngIf="isAdmin()" [matMenuTriggerFor]="userList" class="expandable">
         User
       </button>
       <mat-menu #userList="matMenu">
@@ -81,14 +81,14 @@
         <a mat-menu-item (click)="routeClick()" routerLink="/admin/deleteUser" *ngIf="isAdmin()">Delete User</a>
       </mat-menu>
 
-      <button mat-menu-item *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="slipList" class="expandable">
+      <button mat-menu-item *ngIf="isAdmin()" [matMenuTriggerFor]="slipList" class="expandable">
         Slip
       </button>
       <mat-menu #slipList="matMenu">
         <a mat-menu-item (click)="routeClick()" routerLink="/admin/verifySlip" *ngIf="isAdmin()">Verify Slip</a>
       </mat-menu>
 
-      <button mat-menu-item *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="categoryList" class="expandable">
+      <button mat-menu-item *ngIf="isAdmin()" [matMenuTriggerFor]="categoryList" class="expandable">
         Category
       </button>
       <mat-menu #categoryList="matMenu">
@@ -96,7 +96,7 @@
         <a mat-menu-item (click)="routeClick()" routerLink="/admin/deleteCatgory" *ngIf="isAdmin()">Delete Category</a>
       </mat-menu>
 
-      <button mat-menu-item *ngIf="isAdmin() || isUser()" [matMenuTriggerFor]="auctionList" class="expandable">
+      <button mat-menu-item *ngIf="isAdmin()" [matMenuTriggerFor]="auctionList" class="expandable">
         Auction
       </button>
       <mat-menu #auctionList="matMenu">

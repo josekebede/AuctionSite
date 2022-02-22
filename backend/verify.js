@@ -26,6 +26,24 @@ router.post("/user", async (req, res) => {
   res.status(200).json(userID)
 });
 
+router.post("/userReject", async (req, res) => {
+  const isAdmin = await Utility.checkIfAdmin(req.email);
+  if (!isAdmin)
+    return res.status(403).json("NOT ADMIN")
+
+  const { userID } = req.body;
+  try {
+    let usersRes = await User.findById(userID);
+    usersRes.verified = null;
+    usersRes.save();
+  } catch (error) {
+    console.log("Error verifying user");
+    return res.status(400).json(error)
+  }
+
+  res.status(200).json(userID)
+})
+
 router.post("/slipAccept", async (req, res) => {
   const isAdmin = await Utility.checkIfAdmin(req.email);
   if (!isAdmin)

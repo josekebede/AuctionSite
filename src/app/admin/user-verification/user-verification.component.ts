@@ -13,6 +13,7 @@ export class UserVerificationComponent implements OnInit, OnDestroy {
   users: User[] = [];
   unverifiedUsersSub: Subscription;
   userVerified: Subscription;
+  userRejected: Subscription;
   constructor(private service: ServiceService) {
     this.unverifiedUsersSub = this.service.getUnverifiedUsers().subscribe(
       data => {
@@ -29,6 +30,15 @@ export class UserVerificationComponent implements OnInit, OnDestroy {
         this.service.popup("User Verified")
       }
     )
+    this.userRejected = this.service.getRejectedUser().subscribe(
+      data => {
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == data)
+            this.users.splice(i, 1);
+        }
+        this.service.popup("User Rejected", true)
+      }
+    )
   }
 
   verifyUser(id: string, fullName: string) {
@@ -37,6 +47,10 @@ export class UserVerificationComponent implements OnInit, OnDestroy {
       this.service.verifyUser(id)
   }
 
+  rejectUser(id: string, fullName: string) {
+    if (window.confirm(`Are you sure you want to reject ${fullName}?`))
+      this.service.rejectUser(id)
+  }
   ngOnInit(): void {
     this.service.fetchUnverifiedUsers();
   }

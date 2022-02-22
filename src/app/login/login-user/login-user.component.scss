@@ -1,5 +1,4 @@
 $background: #005F5E;
-
 .login {
   display: flex;
   flex-direction: column;
@@ -61,6 +60,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
 }
   // mat-form-field {
   //   font-size: 1.2em;
@@ -113,19 +113,27 @@ button:active {
 .white{
   color: white;
 }
-::ng-deep .mat-form-field-label {
-  /*change color of label*/
-  color: white !important;
- }
+::ng-deep .usernameRegion, ::ng-deep .passwordRegion {
+  color: white;
+  input{
+    caret-color: white;
+    color: white;
+  }
 
- ::ng-deep.mat-form-field-outline {
-  /*change color of underline*/
-  border-color: white;
-}
+  .mat-form-field-label {
+    /*change color of label*/
+    color: white !important;
+  }
 
-::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: green !important;;
+  ::ng-deep.mat-form-field-outline {
+    /*change color of underline*/
+    border-color: white;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: green !important;;
+  }
 }
 @media only screen and (max-width: 1000px) {
   .login {
