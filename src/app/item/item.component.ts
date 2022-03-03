@@ -117,6 +117,7 @@ export class ItemComponent implements OnInit {
         itemCode: this.code,
         auctionID: this.auctionID
       }
+      console.log(data.itemCode)
       this.service.bidItem(data);
       this.bidGroup.controls["bid"]!.patchValue("")
       delete this.bidGroup.controls["bid"]!.errors!["required"];

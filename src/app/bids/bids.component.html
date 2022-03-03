@@ -1,8 +1,8 @@
 <span class="header">Bids</span>
 
-<span class="innerHeader" *ngIf="!bids.length">No Pending Bids</span>
+<span class="innerHeader" *ngIf="!bidItems.length">No Pending Bids</span>
 <div class="container">
-  <app-item *ngFor="let item of bidItems; let i = index" [item]="item" [auctionEnd]="bids[i].auctionEnd" [isBid]="true"
-    [bidID]="bids[i].bidID">
+  <app-item *ngFor="let bidItem of bidItems; let i = index" [item]="bidItem.item" [auctionEnd]="bidItem.auctionEnd"
+    [isBid]="true" [bidID]="bidItem.bidID">
   </app-item>
 </div>

@@ -287,27 +287,31 @@ router.get("/slipList", async (req, res) => {
   const liveAuctions = await getLiveAuctions(true);
   let finalArray = [];
   if (liveAuctions.length) {
-    let auctionID = liveAuctions[0]._id;
-    const bidsResult = await Bid.find({ auctionID: auctionID, pending: false, verified: false }, { __v: 0 });
-    let bidItemCodes = bidsResult.map(bid => bid.itemCode)
-    let itemsResult = await Item.find({ code: { $in: bidItemCodes } }, { __v: 0 })
-    for (let i = 0; i < bidItemCodes.length; i++) {
-      let item = findItem(itemsResult, bidItemCodes[i])
-      let user = await User.findById(bidsResult[i].userID);
+    for (let j = 0; j < liveAuctions.length; j++) {
+      let auctionID = liveAuctions[j]._id;
+      const bidsResult = await Bid.find({ auctionID: auctionID, pending: false, verified: false }, { __v: 0 });
+      let bidItemCodes = bidsResult.map(bid => bid.itemCode)
+      let itemsResult = await Item.find({ code: { $in: bidItemCodes } }, { __v: 0 })
+      for (let i = 0; i < bidItemCodes.length; i++) {
+        let item = findItem(itemsResult, bidItemCodes[i])
+        let user = await User.findById(bidsResult[i].userID);
 
-      let final = {
-        bidID: bidsResult[i]._id.valueOf(),
-        itemCode: bidItemCodes[i],
-        itemTitle: item.title,
-        initialBid: item.initialBid,
-        currentBid: bidsResult[i].amount,
-        userFullName: `${user.firstName} ${user.lastName}`,
-        special: liveAuctions[0].special,
-        slip: await getProofImage(bidsResult[i]._id.valueOf())
+        let final = {
+          bidID: bidsResult[i]._id.valueOf(),
+          itemCode: bidItemCodes[i],
+          itemTitle: item.title,
+          initialBid: item.initialBid,
+          currentBid: bidsResult[i].amount,
+          userFullName: `${user.firstName} ${user.lastName}`,
+          special: liveAuctions[0].special,
+          slip: await getProofImage(bidsResult[i]._id.valueOf())
+        }
+        finalArray.push(final)
       }
-      finalArray.push(final)
     }
   }
+  console.log(finalArray.length)
+
   res.status(200).json(finalArray)
 })
 

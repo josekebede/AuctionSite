@@ -11,7 +11,7 @@ import { Item } from '../models/items';
 })
 export class SpecialBidsComponent implements OnInit {
   specialItems: SpecialItem[] = [];
-  items: Item[] = [];
+  // items: Item[] = [];
   specialItemsSub: Subscription;
   bidSub: Subscription;
   constructor(private service: ServiceService) {
@@ -19,24 +19,27 @@ export class SpecialBidsComponent implements OnInit {
       data => {
         this.specialItems = data;
         for (let i = 0; i < this.specialItems.length; i++) {
-          this.items.push({
-            title: this.specialItems[i].title,
-            type: this.specialItems[i].type,
-            code: this.specialItems[i].code,
-            initialBid: this.specialItems[i].initialBid,
-            auctionID: this.specialItems[i].auctionID,
-            wishlist: false,
-            picture: this.specialItems[i].picture
-          })
+          this.specialItems[i].wishlist = false;
+          // this.items.push({
+          //   title: this.specialItems[i].title,
+          //   type: this.specialItems[i].type,
+          //   code: this.specialItems[i].code,
+          //   initialBid: this.specialItems[i].initialBid,
+          //   auctionID: this.specialItems[i].auctionID,
+          //   wishlist: false,
+          //   picture: this.specialItems[i].picture
+          // })
         }
+        // console.log(this.items)
       }
     )
 
     this.bidSub = this.service.getSuccessfulBid().subscribe(
       data => {
-        for (let i = 0; i < this.items.length; i++) {
-          if (this.items[i].code == data) {
+        for (let i = 0; i < this.specialItems.length; i++) {
+          if (this.specialItems[i].code == data) {
             this.deleteItem(i)
+            return;
           }
         }
 
@@ -46,7 +49,7 @@ export class SpecialBidsComponent implements OnInit {
   }
 
   deleteItem(index: number) {
-    this.items.splice(index, 1);
+    // this.items.splice(index, 1);
     this.specialItems.splice(index, 1);
   }
   ngOnInit(): void {

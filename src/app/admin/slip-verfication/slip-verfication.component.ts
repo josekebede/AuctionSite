@@ -17,6 +17,7 @@ export class SlipVerficationComponent implements OnInit, OnDestroy {
   constructor(private service: ServiceService, private sanitizer: DomSanitizer) {
     this.slipsSub = this.service.getSlips().subscribe(
       data => {
+        console.log(data)
         this.slips = data;
         for (let i = 0; i < this.slips.length; i++) {
           this.slips[i].slipResource = this.sanitizer.bypassSecurityTrustResourceUrl(this.slips[i].slip);

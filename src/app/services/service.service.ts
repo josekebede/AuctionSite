@@ -386,6 +386,7 @@ export class ServiceService {
     if (authHeader) {
       this.httpClient.post<{ message: string }>(this.backendURL + "auction/bid", bid, { headers: authHeader }).subscribe(
         data => {
+          console.log(data)
           this.bidSuccessful.next(data.message);
         }, error => {
           this.router.navigate(["/login"])

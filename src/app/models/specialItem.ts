@@ -8,4 +8,5 @@ export interface SpecialItem {
   auctionStart: string;
   auctionEnd: string;
   picture: string;
+  wishlist: boolean;
 }

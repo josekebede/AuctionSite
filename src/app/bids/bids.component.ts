@@ -4,22 +4,27 @@ import { Component, OnInit } from '@angular/core';
 import { Bid } from '../models/bids';
 import { Item } from '../models/items';
 
+interface BidItem {
+  item: Item,
+  auctionEnd: string;
+  bidID: string;
+}
+
 @Component({
   selector: 'app-bids',
   templateUrl: './bids.component.html',
   styleUrls: ['./bids.component.scss']
 })
+
 export class BidsComponent implements OnInit {
 
-  bids: Bid[] = [];
-  bidItems: Item[] = []
+  bidItems: BidItem[] = []
   bidsSub: Subscription;
   deletedBidSub: Subscription;
   proofSuccessSub: Subscription;
   constructor(private service: ServiceService) {
     this.bidsSub = this.service.getBids().subscribe(
       data => {
-        this.bids = data;
         data.forEach(bid => {
 
           let item: Item = {
@@ -31,15 +36,21 @@ export class BidsComponent implements OnInit {
             auctionID: bid.auctionID,
             wishlist: false
           }
-          this.bidItems.push(item);
+
+          let bidItem: BidItem = {
+            item: item,
+            auctionEnd: bid.auctionEnd,
+            bidID: bid.bidID
+          }
+          this.bidItems.push(bidItem);
         });
       }
     )
 
     this.deletedBidSub = this.service.getDeletedItem().subscribe(
       id => {
-        for (let i = 0; i < this.bids.length; i++) {
-          if (this.bids[i].bidID == id) {
+        for (let i = 0; i < this.bidItems.length; i++) {
+          if (this.bidItems[i].bidID == id) {
             this.deleteBid(i)
             this.service.popup("Pending Bid Deleted")
           }
@@ -49,8 +60,8 @@ export class BidsComponent implements OnInit {
 
     this.proofSuccessSub = this.service.getProof().subscribe(
       id => {
-        for (let i = 0; i < this.bids.length; i++) {
-          if (this.bids[i].bidID == id) {
+        for (let i = 0; i < this.bidItems.length; i++) {
+          if (this.bidItems[i].bidID == id) {
             this.deleteBid(i)
             this.service.popup("Bank Slip Sent")
           }
@@ -60,15 +71,12 @@ export class BidsComponent implements OnInit {
   }
 
   deleteBid(index: number) {
-    if (this.bidItems.length == 1)
+    if (this.bidItems.length == 1) {
       this.bidItems = [];
-    else
+    }
+    else {
       this.bidItems.splice(index, 1);
-
-    if (this.bids.length == 1)
-      this.bids = [];
-    else
-      this.bids.splice(index, 1);
+    }
   }
   ngOnInit(): void {
     this.service.fetchBids();
