@@ -437,6 +437,8 @@ async function getImage(itemCode) {
       extension = path.extname(path.join(folderPath, dir[i]))
     }
   }
+  if (!file)
+    file = await fs.readFile(path.join(__dirname, "images", "placeholder.png"))
   return `data:image/${extension.substring(1)};base64, ${Buffer.from(file).toString("base64")}`;
 }
 async function getProofImage(bidID) {

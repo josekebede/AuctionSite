@@ -13,12 +13,16 @@
     border-radius: 3px;
     font-size: 1.5em;
     padding: 1em;
+
+    span {
+      display: block;
+      text-align: left;
+      padding: 0.5em 0;
+    }
   }
 }
 .bad {
-  .inner{
-    background-color: rgb(241, 68, 68);
-  }
+    background-color: rgb(241, 68, 68) !important;
 }
 .visible {
   opacity: 1 !important;

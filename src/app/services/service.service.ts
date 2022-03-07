@@ -32,7 +32,7 @@ export class ServiceService {
   private bids = new Subject<Bid[]>();
   private deletedItem = new Subject<string>();
   private wishList = new Subject<Wishlist>();
-  private popupListner = new Subject<{ message: string, error: boolean }>();
+  private popupListner = new Subject<{ message: string | string[], error: boolean }>();
   private wishlistSubject = new Subject<string>();
   private deletedAuction = new Subject<string>();
   private deletedItemAdmin = new Subject<string>();
@@ -500,7 +500,7 @@ export class ServiceService {
   }
 
 
-  popup(message: string, error?: boolean) {
+  popup(message: string | string[], error?: boolean) {
     if (error)
       this.popupListner.next({ message: message, error: true });
     else
@@ -513,10 +513,12 @@ export class ServiceService {
 
     let authHeader = this.createTokenHeader();
     if (authHeader) {
-      this.httpClient.post<string>(this.backendURL + "auction/addFile", formData, { headers: authHeader }).subscribe(
+      this.httpClient.post<string | string[]>(this.backendURL + "auction/addFile", formData, { headers: authHeader }).subscribe(
         data => {
+          this.popup(data)
           console.log(data)
         }, error => {
+          this.popup(error.error, true)
           console.log(error)
         }
       )

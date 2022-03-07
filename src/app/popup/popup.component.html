@@ -1,5 +1,9 @@
-<div class="container" [ngClass]="shown? error? 'visible bad': 'visible': ''">
-  <div class="inner">
+<div class="container" [ngClass]="shown? 'visible': ''">
+  <div class="inner" [ngClass]="error? 'bad' : ''" *ngIf="isString(message)">
     {{message}}
+  </div>
+
+  <div class="inner" [ngClass]="error? 'bad' : ''" *ngIf="!isString(message)">
+    <span *ngFor="let messageElem of messageArray">{{messageElem}}</span>
   </div>
 </div>

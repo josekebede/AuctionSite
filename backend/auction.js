@@ -3,6 +3,8 @@ const xlsx = require("node-xlsx");
 const Category = require("./schemas/categories")
 const fs = require("fs").promises;
 const JSZip = require("jszip");
+const ExcelJS = require('exceljs')
+const workbook = new ExcelJS.Workbook();
 const path = require("path")
 const Auction = require("./schemas/auctions");
 const Item = require("./schemas/items");
@@ -63,7 +65,7 @@ router.post("/add", upload.single("picture"), async (req, res) => {
     try {
       startDate = new Date(auctionStart)
       endDate = new Date(auctionEnd);
-      endDate.setHours(0, 0, 0); // Sets the start time to the start of day
+      startDate.setHours(0, 0, 0); // Sets the start time to the start of day
       endDate.setHours(23, 59, 59); // Sets the end time to the end of day
     } catch (error) {
       return res.status(400).json({ message: "INCORRECT AUCTION DATES" })
@@ -162,15 +164,15 @@ router.post("/addFile", upload.single("file"), async (req, res) => {
   const file = req.file;
   let data = (xlsx.parse(file.buffer))[0].data;
 
-  // let zip = new JSZip();
-  // let unzippedData = await JSZip.loadAsync(file.buffer)
-  // console.log(unzippedData)
-  let headers = data[0];
-
   let auctionResult = await Auction.find({});
   let auctionStartDates = auctionResult.map(auction => auction.startDate);
   let auctionEndDates = auctionResult.map(auction => auction.endDate);
+
+  let categories = await Category.find();
+  let categoryNames = categories.map(category => category.name.toLowerCase())
   let now = new Date(Date.now());
+
+  let auctionRange = null;
   for (let i = 1; i < data.length; i++) {
     let title = data[i][0];
     let type = data[i][1];
@@ -181,15 +183,31 @@ router.post("/addFile", upload.single("file"), async (req, res) => {
     if (!title || !type || !initial || !start || !end)
       return res.status(400).json("Invalid Format")
 
+    if (!categoryNames.includes(type.toLowerCase()))
+      return res.status(400).json(`Unknown Item type on Row ${i + 1}`);
+
     try {
-      start = new Date(ExcelDateToJSDate(start))
+      initial = parseInt(initial)
+    } catch (error) {
+      return res.status(400).json(`Incorrect initial bid on Row ${i + 1}`)
+    }
+
+    try {
+      start = new Date(ExcelDateToJSDate(start, true))
       end = new Date(ExcelDateToJSDate(end))
     } catch (error) {
       return res.status(400).json(`Invalid Date(s) on Row ${i + 1}`)
     }
 
-    // console.log(`Start:${start}`)
-    // console.log(`End  :${end}`)
+    data[i][3] = start;
+    data[i][4] = end;
+    if (!auctionRange)
+      auctionRange = { start: start, end: end };
+
+    let newAuctionRange = { start: start, end: end };
+    if (auctionRange.start.getTime() !== newAuctionRange.start.getTime() || auctionRange.end.getTime() !== newAuctionRange.end.getTime())
+      return res.status(400).json("Multiple date ranges. Only one auction per file.")
+
     start = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
     end = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()));
     now = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
@@ -207,10 +225,79 @@ router.post("/addFile", upload.single("file"), async (req, res) => {
       if ((start <= auctionEnd && start >= auctionStart) || (start <= auctionStart && end >= auctionEnd))
         return res.status(400).json(`Ovelapping auction on Row ${i + 1}`)
     }
-
   }
 
-  res.status(200).json("Works")
+  // Loads workbook
+  await workbook.xlsx.load(file.buffer);
+  // Selects a worksheet
+  let worksheet = workbook.worksheets[0];
+
+  // Gets all images inside worksheet
+  for (const image of worksheet.getImages()) {
+    // Gets row of image
+    const row = image.range.tl.nativeRow;
+    // Gets column of image
+    const col = image.range.tl.nativeCol;
+
+    // If the image is not on the fifth column (where it should be)
+    if (col !== 5) {
+      return res.status(400).json(`Image not of 5th Column on Row ${row}`)
+    }
+
+    // Gets actual image
+    const img = workbook.model.media.find(m => m.index === image.imageId);
+    // Adds image (and extension) to data
+    data[row][5] = { image: img.buffer, extension: img.extension };
+    // console.log(img)
+  }
+
+
+  let auction = new Auction({
+    startDate: auctionRange.start,
+    endDate: auctionRange.end
+  })
+
+  let savedAuction;
+
+  try {
+    savedAuction = await auction.save();
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json("ERROR SAVING AUCTION")
+  }
+
+  for (let i = 1; i < data.length; i++) {
+    let savedItem;
+
+    try {
+      savedItem = await saveItem(savedAuction._id.valueOf(), data[i][0], data[i][1], data[i][2]);
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json("ERROR SAVING ITEM")
+    }
+
+    // Saves the image only if it exists
+    if (data[i][5])
+      try {
+        await saveImageFromFile(savedItem.code, data[i][5].extension, data[i][5].image)
+      } catch (error) {
+        console.log(error)
+        return res.status(400).json("ERROR SAVING IMAGE")
+      }
+
+    savedAuction.items.push({ itemCode: savedItem.code })
+  }
+
+  try {
+    await savedAuction.save();
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json("ERROR SAVING AUCTION")
+  }
+
+  let newAuctionDateStart = auctionRange.start.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })
+  let newAuctionDateEnd = auctionRange.end.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })
+  res.status(200).json([`Auction Created Successfully`, '', `Range:- ${newAuctionDateStart} - ${newAuctionDateEnd}`, `Items:-  ${data.length - 1}`])
 });
 
 router.post("/deleteAuction", async (req, res) => {
@@ -529,6 +616,11 @@ async function saveImage(subFolder, name, image) {
   saveItemPic = await fs.writeFile(filePath, image.buffer, "binary");
 }
 
+async function saveImageFromFile(name, extension, imageBuffer) {
+  const filePath = path.join(__dirname, "images", "items", name + extension);
+  saveItemPic = await fs.writeFile(filePath, imageBuffer, "binary");
+}
+
 async function deleteItemPicture(itemCode) {
   const folderPath = path.join(__dirname, "images", "items");
   let dir = await fs.readdir(folderPath);
@@ -549,10 +641,16 @@ async function deleteBidPicture(bidID) {
   }
 }
 
-function ExcelDateToJSDate(date) {
+function ExcelDateToJSDate(date, isStart = false) {
   let newDate = new Date(Math.round((date - 25569) * 86400 * 1000))
+  if (isStart)
+    newDate.setHours(0, 0, 0)
+  else
+    newDate.setHours(23, 59, 59)
   if (newDate == "Invalid Date")
     throw error
+  // newDate = ((newDate.toString()).split('Z')[0])
+  console.log(newDate)
   return newDate;
 }
 module.exports = router

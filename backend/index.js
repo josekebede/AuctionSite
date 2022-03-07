@@ -87,7 +87,7 @@ async function checkAuctionEnd() {
   for (let i = 0; i < auctions.length; i++) {
     let endDate = new Date(auctions[i].endDate);
     let diff = endDate.getTime() - Date.now();
-    console.log(diff)
+    // console.log(diff)
     if (diff < 0) {
       await calculateHighestBidder(auctions[i].id)
     }
